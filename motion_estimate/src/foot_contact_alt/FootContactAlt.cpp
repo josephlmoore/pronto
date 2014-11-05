@@ -52,7 +52,7 @@ contact_status_id FootContactAlt::DetectFootTransition(int64_t utime, float left
   bool rf_state = (bool) right_contact_state_strong_->getState();
   
   std::stringstream ss;
-  ss << (int)standing_foot << " | " << lf_state << " " << rf_state << " ";
+  ss << "TYP " << (int)standing_foot << " | " << lf_state << " " << rf_state << " ";
   
   if (!lf_state_last && lf_state){
     if (verbose_ >= 1) std::cout << ss.str() << "Left has gone high\n"; 
@@ -92,7 +92,7 @@ contact_status_id FootContactAlt::DetectFootTransition(int64_t utime, float left
     }
   }
   
-  std::cout << ss.str() << "Situation unknown. Error\n";
+  std::cout << ss.str() << "Situation unknown. Error | "<< leftz << " | "<<  rightz <<"\n";
   exit(-1);
   return F_STATUS_UNKNOWN;
 }

@@ -141,7 +141,7 @@ float foot_contact_classify::update (int64_t utime, Eigen::Isometry3d primary_fo
 
 std::string print_variables(int mode_, bool left_contact, bool right_contact, bool left_contact_break, bool right_contact_break){
   std::stringstream ss;
-  ss << left_contact << "" << right_contact << "  " << left_contact_break << "" << right_contact_break << " | " << mode_;
+  ss << "CLS " << left_contact << "" << right_contact << "  " << left_contact_break << "" << right_contact_break << " | " << mode_;
   return ss.str();
 }
 
