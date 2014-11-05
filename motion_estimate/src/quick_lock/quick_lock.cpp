@@ -30,6 +30,7 @@ using namespace Eigen;
 struct CommandLineConfig
 {
     int mode;
+    std::string input_channel;
     std::string output_channel;
     float xyz_cov;
     float yaw_cov;
@@ -64,7 +65,7 @@ class App{
 App::App(boost::shared_ptr<lcm::LCM> &lcm_, const CommandLineConfig& cl_cfg_):
     lcm_(lcm_), cl_cfg_(cl_cfg_){
 
-  lcm_->subscribe( "STATE_ESTIMATOR_STATE_LASER" ,&App::filterStateHandler,this);
+  lcm_->subscribe( cl_cfg_.input_channel ,&App::filterStateHandler,this);
   lcm_->subscribe( "CONTROLLER_STATUS" ,&App::controllerStatusHandler,this);
 
   lcm_->subscribe( "POSE_BODY" ,&App::poseHandler,this);
@@ -112,7 +113,7 @@ void App::filterStateHandler(const lcm::ReceiveBuffer* rbuf, const std::string& 
 
   counter_++;
   if (counter_ % 10000 == 0){
-    std::cout << msg->utime << " STATE_ESTIMATOR_STATE_LASER\n";
+    std::cout << msg->utime << " "<< cl_cfg_.input_channel <<"\n";
   }
 
   //the indices used to correct SE:
@@ -164,6 +165,7 @@ void App::filterStateHandler(const lcm::ReceiveBuffer* rbuf, const std::string& 
 int main(int argc, char ** argv) {
   CommandLineConfig cl_cfg;
   cl_cfg.mode = 0;
+  cl_cfg.input_channel = "STATE_ESTIMATOR_STATE_LASER";
   cl_cfg.output_channel = "GPF_MEASUREMENT_QUICK_LOCK";
   cl_cfg.correct_all_modes = false;
   // higher is weaker.
@@ -175,6 +177,7 @@ int main(int argc, char ** argv) {
   cl_cfg.yaw_cov = 400;
   ConciseArgs opt(argc, (char**)argv);
   opt.add(cl_cfg.mode, "f", "mode","Filter Type");
+  opt.add(cl_cfg.input_channel, "i", "input_channel","Input state channel");
   opt.add(cl_cfg.output_channel, "o", "output_channel","Output measurement channel");
   opt.add(cl_cfg.correct_all_modes, "a", "correct_all_modes","Correct during all modes");
   opt.add(cl_cfg.xyz_cov, "x", "xyz","Linear Covariance Rate");
