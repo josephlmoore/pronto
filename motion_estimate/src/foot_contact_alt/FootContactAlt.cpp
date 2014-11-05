@@ -3,7 +3,7 @@
 using namespace TwoLegs;
 using namespace std;
 
-FootContactAlt::FootContactAlt(bool _log_data_files,const float atlasWeight){
+FootContactAlt::FootContactAlt(bool _log_data_files,const float atlasWeight, const float schmittLevel){
   cout << "A new FootContactAlt object was created" << endl;
 
   // was 1400*0.65 for a long time, but this didn't work with toe lift off stepping
@@ -29,8 +29,10 @@ FootContactAlt::FootContactAlt(bool _log_data_files,const float atlasWeight){
   // To reduce tic-tocing you can reduce the first number
   // originally 275/375 was ok, but some upward drift (3/4 of a block height) and backward drift (1/3 of a block length)
   // later 475/525 was better, upward drift (1/2 of block) and backward drift (about the same)
-  left_contact_state_strong_  = new SchmittTrigger(525.0, 575.0, 7000, 7000);
-  right_contact_state_strong_ = new SchmittTrigger(525.0, 575.0, 7000, 7000); 
+  float lowerLevel = schmittLevel -25.0;
+  float upperLevel = schmittLevel +25.0;
+  left_contact_state_strong_  = new SchmittTrigger(lowerLevel, upperLevel, 7000, 7000);
+  right_contact_state_strong_ = new SchmittTrigger(lowerLevel, upperLevel, 7000, 7000);
   
   left_contact_state_strong_->forceHigh();
   right_contact_state_strong_->forceHigh();

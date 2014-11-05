@@ -54,7 +54,7 @@ class FootContactAlt {
 
     bool verbose_;
   public:     
-    FootContactAlt (bool _log_data_files, const float atlasWeight);
+    FootContactAlt (bool _log_data_files, const float atlasWeight, const float schmittLevel);
 
     void terminate();
 
