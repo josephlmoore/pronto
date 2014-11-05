@@ -65,9 +65,18 @@ contact_status_id FootContactAlt::DetectFootTransition(int64_t utime, float left
   }else if(lf_state_last && !lf_state){
     if (verbose_ >= 3) std::cout << ss.str() << "Left has gone low\n"; 
     if (standing_foot==F_LEFT){
-      if (verbose_ >= 1) std::cout << ss.str() << "Left has gone low when used as standing, force switch to right "<< leftz << " | "<<  rightz <<"\n"; 
-      standing_foot = F_RIGHT;
-      return F_RIGHT_NEW;
+
+      // New Nov 2014:
+      if (rf_state){
+        if (verbose_ >= 1) std::cout << ss.str() << "Left has gone low when used as standing, force switch to right "<< leftz << " | "<<  rightz <<"\n";
+        standing_foot = F_RIGHT;
+        return F_RIGHT_NEW;
+      }else{
+        if (verbose_ >= 1) std::cout << ss.str() << "Left has gone low when used as standing, right also "<< leftz << " | "<<  rightz <<" [flight]\n";
+        standing_foot = F_UNKNOWN;
+        return F_STATUS_UNKNOWN;
+      }
+
     }else{
       if (verbose_ >= 3) std::cout << ss.str() << "Left has gone low when used not used as standing. Continue with right\n"; 
       return F_RIGHT_FIXED;
@@ -75,13 +84,27 @@ contact_status_id FootContactAlt::DetectFootTransition(int64_t utime, float left
   }else if(rf_state_last && !rf_state){
     if (verbose_ >= 3) std::cout << ss.str() << "Right has gone low\n"; 
     if (standing_foot==F_RIGHT){
-      if (verbose_ >= 1) std::cout << ss.str() << "Right has gone low when used as standing, force switch to left "<< leftz << " | "<<  rightz <<"\n"; 
-      standing_foot = F_LEFT;
-      return F_LEFT_NEW;
+
+      // New Nov 2014:
+      if (lf_state){
+        if (verbose_ >= 1) std::cout << ss.str() << "Right has gone low when used as standing, force switch to left "<< leftz << " | "<<  rightz <<"\n";
+        standing_foot = F_LEFT;
+        return F_LEFT_NEW;
+      }else{
+        if (verbose_ >= 1) std::cout << ss.str() << "Right has gone low when used as standing, left also "<< leftz << " | "<<  rightz <<" [flight]\n";
+        standing_foot = F_UNKNOWN;
+        return F_STATUS_UNKNOWN;
+      }
+
     }else{
       if (verbose_ >= 3) std::cout << ss.str() << "Right has gone low when used not used as standing. Continue with left\n"; 
       return F_LEFT_FIXED;
     }    
+  }else if (!lf_state  && !rf_state){
+    if (verbose_ >= 1) std::cout << ss.str() << " Left and Right are not in contact (still)"<< leftz << " | "<<  rightz <<" [flight]\n";
+    standing_foot = F_UNKNOWN;
+    return F_STATUS_UNKNOWN;
+
   }else{
     if (standing_foot==F_LEFT){
       if (verbose_ >= 3) std::cout << ss.str() << "Left No change\n";

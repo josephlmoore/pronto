@@ -585,7 +585,14 @@ float leg_estimate::updateOdometry(std::vector<std::string> joint_name,
 
   // 4. Determine a valid kinematic deltaodom_to_body_delta_
   float estimate_status = -1.0; // if odometry is not valid, then use -1 to indicate it
-  if (leg_odo_init_){
+  if (contact_status == F_STATUS_UNKNOWN) {
+      std::cout << "ODO F_STATUS_UNKNOWN\n";
+
+      odom_to_body_delta_ =  Eigen::Isometry3d::Identity();
+      estimate_status = -1.0; // if odometry is not valid, then use -1 to indicate it
+      leg_odo_init_ = false;
+      return estimate_status;
+  }else if (leg_odo_init_){
     if (!init_this_iteration){
       // Calculate and publish the position delta:
       odom_to_body_delta_ =  previous_odom_to_body_.inverse() * odom_to_body_;
