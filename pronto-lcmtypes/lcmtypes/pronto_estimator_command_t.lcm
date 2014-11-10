@@ -1,0 +1,16 @@
+package pronto;
+
+// Command the state estimator, at a high level:
+// For now: Turn on or off the laser or idle it (for standing)
+
+struct estimator_command_t
+{
+  int64_t utime;
+  int32_t command;
+
+  //
+  const int32_t GPF_ENABLED =0;
+  const int32_t GPF_DISABLED=1; // turned off, not used at all
+  const int32_t GPF_IDLE    =2; // in an idle mode e.g. when standing
+}
+
