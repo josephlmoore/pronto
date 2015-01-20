@@ -18,6 +18,7 @@ message(STATUS ${Boost_LIBRARIES})
 
 include_directories(include)
 include_directories(${LCMTYPES_INCLUDE_DIRS})
+include_directories(${Boost_INCLUDE_DIRS})
 link_libraries(${LCMTYPES_LIBS} vs_vis)
 
 add_library(vs_vis SHARED

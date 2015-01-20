@@ -12,6 +12,10 @@ include(cmake/pods.cmake)
 #lcmtypes_build()
 #lcmtypes_build(C_AGGREGATE_HEADER pronto_tools.h)
 
+find_package(Boost COMPONENTS system REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
+
+
 add_subdirectory(src/pronto_math)
 add_subdirectory(src/pronto_vis)
 add_subdirectory(src/pronto_lcm)

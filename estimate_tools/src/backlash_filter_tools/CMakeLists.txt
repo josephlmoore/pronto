@@ -7,7 +7,7 @@ project(backlash_filter_tools)
 ################
 add_library(backlash_filter_tools  SHARED backlash_filter.cpp)
 pods_use_pkg_config_packages(backlash_filter_tools  ${PKG_CONFIG_DEPS}  
-  eigen3)
+  eigen3 kalman_filter_tools)
 set_target_properties(backlash_filter_tools PROPERTIES SOVERSION 1)
 pods_install_libraries(backlash_filter_tools)
 pods_install_headers( backlash_filter.hpp

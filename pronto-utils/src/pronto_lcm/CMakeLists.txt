@@ -29,7 +29,7 @@ pods_install_libraries(pronto_lcm)
 pods_install_headers(pronto_lcm.hpp ${CMAKE_CURRENT_BINARY_DIR}/pronto_lcm_config.h DESTINATION pronto_utils)
 
 target_link_libraries(pronto_lcm
-    z)
+    z ${Boost_LIBRARIES})
 pods_install_pkg_config_file(pronto_lcm
     LIBS -lpronto_lcm -lz
     REQUIRES bot2-vis  eigen3 ${PCL_IO_PKG_CONFIG}

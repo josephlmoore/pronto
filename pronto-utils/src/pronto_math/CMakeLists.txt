@@ -1,7 +1,9 @@
 add_definitions(-Wall -fPIC -m64 -enable-shared  -enable-pic)
 add_library(pronto_math  SHARED pronto_math.cpp)
 
-target_link_libraries(pronto_math jpeg ${LCMTYPES_LIBS})
+find_package(JPEG REQUIRED)
+
+target_link_libraries(pronto_math ${JPEG_LIBRARY} ${LCMTYPES_LIBS})
 pods_use_pkg_config_packages(pronto_math
     eigen3
     )

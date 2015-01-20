@@ -32,7 +32,9 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 add_library(pronto_vis SHARED pronto_vis.cpp)
 pods_use_pkg_config_packages(pronto_vis ${PCL_IO_PKG_CONFIG} lcm eigen3  
-	glib-2.0)
+	glib-2.0 lcmtypes_visualization bot2-core pronto_math)
+
+target_link_libraries(pronto_vis ${Boost_LIBRARIES})
 
 set_target_properties(pronto_vis PROPERTIES SOVERSION 1)
 pods_install_libraries(pronto_vis)

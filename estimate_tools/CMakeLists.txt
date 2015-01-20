@@ -11,7 +11,8 @@ SET(CMAKE_BUILD_TYPE Debug)
 #include(cmake/lcmtypes.cmake)
 #lcmtypes_build()
 
-
+find_package(Boost COMPONENTS system REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
 
 add_subdirectory(src/filter_tools)
 add_subdirectory(src/estimate_tools)

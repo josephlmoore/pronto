@@ -4,7 +4,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -Wno-deprecated-declarations 
 
 
 add_executable(test-point-cloud test_point_cloud.cpp)
-target_link_libraries(test-point-cloud boost_system)
+target_link_libraries(test-point-cloud ${Boost_LIBRARIES})
 pods_use_pkg_config_packages(test-point-cloud lcm 
   pronto_vis pronto_lcm)
 pods_install_executables(test-point-cloud)
@@ -23,7 +23,7 @@ endif()
 
 
 add_executable(test-point-cloud-pcl test_point_cloud_pcl.cpp)
-target_link_libraries(test-point-cloud-pcl boost_system)
+target_link_libraries(test-point-cloud-pcl ${Boost_LIBRARIES})
 pods_use_pkg_config_packages(test-point-cloud-pcl lcm ${PCL_IO_PKG_CONFIG} 
   pronto_vis pronto_lcm)
 pods_install_executables(test-point-cloud-pcl)

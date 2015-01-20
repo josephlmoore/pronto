@@ -27,8 +27,8 @@ pods_use_pkg_config_packages(pronto_filters   eigen3
 	pcl_common-1.7   pcl_io-1.7      pcl_surface-1.7   pcl_segmentation-1.7 
 	pcl_filters-1.7  pcl_surface-1.7 pcl_io-1.7 	   pcl_kdtree-1.7  pcl_search-1.7)
 
-target_link_libraries(pronto_filters)
-pods_use_pkg_config_packages(pronto_filters lcm eigen3   glib-2.0 )
+target_link_libraries(pronto_filters ${Boost_LIBRARIES})
+pods_use_pkg_config_packages(pronto_filters lcm eigen3   glib-2.0 lcmtypes_visualization pronto_math pronto_vis bot2-core)
 
 
 # set the library API version.  Increment this every time the public API changes.

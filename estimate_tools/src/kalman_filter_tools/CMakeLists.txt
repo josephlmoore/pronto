@@ -7,7 +7,7 @@ project(kalman_filter_tools)
 ################
 add_library(kalman_filter_tools  SHARED kalman_filter.cpp simple_kalman_filter.cpp alpha_filter.cpp)
 pods_use_pkg_config_packages(kalman_filter_tools  ${PKG_CONFIG_DEPS}  
-  eigen3)
+  eigen3 estimate_tools)
 set_target_properties(kalman_filter_tools PROPERTIES SOVERSION 1)
 pods_install_libraries(kalman_filter_tools)
 pods_install_headers( kalman_filter.hpp simple_kalman_filter.hpp alpha_filter.hpp
